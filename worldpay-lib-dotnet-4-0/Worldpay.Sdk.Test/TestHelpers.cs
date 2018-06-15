@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Worldpay.Sdk.Models;
 
 namespace Worldpay.Sdk.Test
@@ -28,8 +29,8 @@ namespace Worldpay.Sdk.Test
             cardRequest.cvc = TestCvv;
             cardRequest.name = "csharplib client";
             cardRequest.expiryMonth = 2;
-            cardRequest.expiryYear = 2018;
-            cardRequest.type = "Card";
+			cardRequest.expiryYear = DateTime.Now.Year + 1;
+			cardRequest.type = "Card";
 
             tokenRequest.paymentMethod = cardRequest;
 

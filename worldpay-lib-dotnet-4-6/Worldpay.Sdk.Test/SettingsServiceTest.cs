@@ -8,8 +8,6 @@ namespace Worldpay.Sdk.Test
     {
         private SettingsService _settingsService;
 
-        private const string MerchantId = "01346fe3-86b7-40d4-9406-a4646e9fa520";
-
         [TestInitialize]
         public void Setup()
         {
@@ -20,7 +18,7 @@ namespace Worldpay.Sdk.Test
         [TestMethod]
         public void TestGetSettings()
         {
-            SettingsResponse settings = _settingsService.GetSettings(MerchantId);
+            SettingsResponse settings = _settingsService.GetSettings(Configuration.MerchantId);
             
             Assert.IsNotNull(settings);
         }
@@ -29,14 +27,14 @@ namespace Worldpay.Sdk.Test
         [TestMethod]
         public void TestUpdateBillingSettings()
         {
-            _settingsService.UpdateRecurringBilling(MerchantId, true);
+            _settingsService.UpdateRecurringBilling(Configuration.MerchantId, true);
             
-            SettingsResponse settings = _settingsService.GetSettings(MerchantId);            
+            SettingsResponse settings = _settingsService.GetSettings(Configuration.MerchantId);            
             Assert.AreEqual(true, settings.orderSetting.optInForRecurringBilling);
 
-            _settingsService.UpdateRecurringBilling(MerchantId, true);
+            _settingsService.UpdateRecurringBilling(Configuration.MerchantId, true);
 
-            settings = _settingsService.GetSettings(MerchantId);
+            settings = _settingsService.GetSettings(Configuration.MerchantId);
             Assert.AreEqual(false, settings.orderSetting.optInForRecurringBilling);
         }
 
@@ -49,9 +47,9 @@ namespace Worldpay.Sdk.Test
                 cvcEnabled = true
             };
 
-            _settingsService.UpdateRiskSettings(MerchantId, riskSetting);
+            _settingsService.UpdateRiskSettings(Configuration.MerchantId, riskSetting);
 
-            var settings = _settingsService.GetSettings(MerchantId);
+            var settings = _settingsService.GetSettings(Configuration.MerchantId);
             Assert.AreEqual(false, settings.riskSetting.avsEnabled);
             Assert.AreEqual(true, settings.riskSetting.cvcEnabled);
 
@@ -60,9 +58,9 @@ namespace Worldpay.Sdk.Test
                 avsEnabled = true,
                 cvcEnabled = false
             };
-            _settingsService.UpdateRiskSettings(MerchantId, riskSetting);
+            _settingsService.UpdateRiskSettings(Configuration.MerchantId, riskSetting);
 
-            settings = _settingsService.GetSettings(MerchantId);
+            settings = _settingsService.GetSettings(Configuration.MerchantId);
             Assert.AreEqual(true, settings.riskSetting.avsEnabled);
             Assert.AreEqual(false, settings.riskSetting.cvcEnabled);
         }
